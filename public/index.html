@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduTrack — Student Management</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Notification -->
+  <div id="notification" class="notification" role="alert" aria-live="polite"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">EduTrack</span>
+      </div>
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">✕</button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard">
+        <span class="nav-icon">▦</span> Dashboard
+      </a>
+      <a href="#" class="nav-item" data-section="register">
+        <span class="nav-icon">＋</span> Add Student
+      </a>
+      <a href="#" class="nav-item" data-section="students">
+        <span class="nav-icon">≡</span> Students
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <span>Academic Year 2025–26</span>
+    </div>
+  </aside>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <h1 class="page-title" id="pageTitle">Dashboard</h1>
+      <div class="topbar-right">
+        <div class="search-wrap" id="searchWrap">
+          <input type="text" id="searchInput" placeholder="Search by name or ID…" autocomplete="off" />
+          <span class="search-icon">⌕</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section class="section" id="section-dashboard">
+      <div class="section-intro">
+        <p class="section-eyebrow">Overview</p>
+        <h2>Academic Snapshot</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card" id="stat-total">
+          <div class="stat-label">Total Students</div>
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-bar"><div class="stat-fill" id="fillTotal"></div></div>
+        </div>
+        <div class="stat-card" id="stat-courses">
+          <div class="stat-label">Courses Offered</div>
+          <div class="stat-value" id="statCourses">0</div>
+          <div class="stat-bar"><div class="stat-fill" id="fillCourses"></div></div>
+        </div>
+        <div class="stat-card" id="stat-active">
+          <div class="stat-label">Active Students</div>
+          <div class="stat-value" id="statActive">0</div>
+          <div class="stat-bar"><div class="stat-fill" id="fillActive"></div></div>
+        </div>
+      </div>
+
+      <div class="recent-block">
+        <div class="block-header">
+          <h3>Recently Added</h3>
+          <button class="btn-link" data-section="students">View all →</button>
+        </div>
+        <div id="recentList" class="recent-list"></div>
+      </div>
+    </section>
+
+    <!-- Register Section -->
+    <section class="section hidden" id="section-register">
+      <div class="section-intro">
+        <p class="section-eyebrow">Registration</p>
+        <h2 id="formHeading">New Student</h2>
+      </div>
+      <div class="form-card">
+        <form id="studentForm" novalidate>
+          <input type="hidden" id="editId" />
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="studentId">Student ID <span class="req">*</span></label>
+              <input type="text" id="studentId" placeholder="e.g. STU-2025-001" />
+              <span class="error-msg" id="err-studentId"></span>
+            </div>
+            <div class="form-group">
+              <label for="fullName">Full Name <span class="req">*</span></label>
+              <input type="text" id="fullName" placeholder="e.g. Aditya Sharma" />
+              <span class="error-msg" id="err-fullName"></span>
+            </div>
+            <div class="form-group">
+              <label for="email">Email <span class="req">*</span></label>
+              <input type="email" id="email" placeholder="student@example.com" />
+              <span class="error-msg" id="err-email"></span>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number <span class="req">*</span></label>
+              <input type="tel" id="phone" placeholder="e.g. 9876543210" />
+              <span class="error-msg" id="err-phone"></span>
+            </div>
+            <div class="form-group">
+              <label for="course">Course <span class="req">*</span></label>
+              <select id="course">
+                <option value="">— Select course —</option>
+                <option>Computer Science</option>
+                <option>Electronics Engineering</option>
+                <option>Mechanical Engineering</option>
+                <option>Civil Engineering</option>
+                <option>Business Administration</option>
+                <option>Data Science</option>
+                <option>Artificial Intelligence</option>
+                <option>Biotechnology</option>
+              </select>
+              <span class="error-msg" id="err-course"></span>
+            </div>
+            <div class="form-group">
+              <label for="year">Year <span class="req">*</span></label>
+              <select id="year">
+                <option value="">— Select year —</option>
+                <option>1st Year</option>
+                <option>2nd Year</option>
+                <option>3rd Year</option>
+                <option>4th Year</option>
+              </select>
+              <span class="error-msg" id="err-year"></span>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" id="submitBtn">Add Student</button>
+            <button type="button" class="btn-secondary" id="cancelEdit">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Students Section -->
+    <section class="section hidden" id="section-students">
+      <div class="section-intro">
+        <p class="section-eyebrow">Directory</p>
+        <h2>All Students</h2>
+      </div>
+      <div class="table-toolbar">
+        <div class="search-wrap inline">
+          <input type="text" id="tableSearch" placeholder="Search by name or ID…" autocomplete="off" />
+          <span class="search-icon">⌕</span>
+        </div>
+        <button class="btn-primary" data-section="register">+ Add Student</button>
+      </div>
+      <div class="table-wrap">
+        <table id="studentTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Course</th>
+              <th>Year</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div id="emptyState" class="empty-state hidden">
+          <p class="empty-icon">🎓</p>
+          <p>No students found. Add one to get started.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle">Remove student?</h3>
+      <p>This will permanently delete the record. This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="btn-danger" id="confirmDelete">Delete</button>
+        <button class="btn-secondary" id="cancelDelete">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
